@@ -2,6 +2,7 @@
   "name": "yet-another-react-test-app",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "https://basvasilich.github.io/yet-another-react-test-app/",
   "dependencies": {
     "empty": "^0.10.1",
     "enzyme-adapter-react-16": "^1.7.1",
@@ -25,6 +26,7 @@
     "eslint-plugin-react": "^7.12.2",
     "flow-bin": "^0.89.0",
     "flow-typed": "^2.5.1",
+    "gh-pages": "^2.0.1",
     "prettier": "^1.15.3",
     "redux-devtools-extension": "^2.13.7"
   },
@@ -34,6 +36,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "flow": "flow",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "prettier": "prettier --config ./prettier.config.js  --write \"src/**/*.js\"\n"
   },
   "eslintConfig": {
