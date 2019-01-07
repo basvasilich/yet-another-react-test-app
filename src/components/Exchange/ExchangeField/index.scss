@@ -1,0 +1,52 @@
+@import '../../../vars.scss';
+
+.ExchangeField {
+  margin: 0 $gu-m
+}
+
+.ExchangeField-bottom-row,
+.ExchangeField-top-row {
+  font-size: $font-size-l;
+  display: flex;
+}
+
+.ExchangeField-top-row {
+  margin-bottom: $gu-s
+}
+
+.ExchangeField-bottom-row {
+  font-size: $font-size-s;
+  justify-content: space-between;
+}
+
+.ExchangeField-currency-symbol {
+  flex: 0 0 auto;
+  padding-right: $gu-m;
+}
+
+.ExchangeField-value {
+  flex: 1 0 60%;
+}
+
+.ExchangeField-input {
+  font-size: $font-size-l;
+  text-align: right;
+  width: 100%;
+  border: none;
+  font-weight: 300;
+  color: $color-black;
+  &:focus{
+      outline: none;
+  }
+
+  .is-invalid & {
+    color: rgb(255, 0 ,0);
+    font-weight: 400;
+  }
+}
+
+.ExchangeField-input[type=number]::-webkit-inner-spin-button,
+.ExchangeField-input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

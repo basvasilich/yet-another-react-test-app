@@ -1,0 +1,7 @@
+@import '../../vars.scss';
+
+.App {
+  font-size: $font-size-m;
+  max-width: $gu-m * 25;
+  margin: ($gu-xl * 2) auto;
+}

@@ -1,11 +1,20 @@
 [ignore]
+.*test.js
+.*/node_modules/.*
+.*/build/.*
 
 [include]
+./src/**/*.js
 
 [libs]
 
 [lints]
 
 [options]
-
+module.file_ext=.js
+module.file_ext=.json
+module.file_ext=.scss
+module.file_ext=.css
+module.name_mapper.extension='scss' -> 'empty/object'
+module.name_mapper.extension='css' -> 'empty/object'
 [strict]

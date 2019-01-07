@@ -1,0 +1,73 @@
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
+@import '../../vars.scss';
+
+.Exchange {
+  position: relative;
+}
+.Exchange-header {
+  height: $gu-xl;
+  font-size: $font-size-m;
+  text-align: center;
+}
+
+.Exchange-slider {
+  margin: $gu-m 0 $gu-xl * 2;
+
+  .slick-dots li,
+  .slick-dots li button::before,
+  .slick-dots li button {
+    width: $gu-m;
+  }
+}
+
+.Exchange-separator {
+  width: $gu-m * 3;
+  height: $gu-m * 2;
+  margin: $gu-m auto;
+  overflow: hidden;
+  position: relative;
+  .Exchange-separator-i {
+    width: $gu-m * 2;
+    height: $gu-m * 2;
+    border: 1px solid rgba($color-black, 0.1);
+    transform: rotate(45deg);
+    position: absolute;
+    top: -$gu-m;
+    left: 50%;
+    margin-left: -$gu-m;
+  }
+}
+
+.Exchange-buttons {
+  padding-top: $gu-l;
+}
+
+.Exchange-button {
+  width: 100%;
+  font-size: $font-size-m;
+  text-transform: uppercase;
+  border: none;
+  padding: $gu-s;
+
+  &.is-disabled {
+    color: rgba($color-black, 0.2);
+  }
+}
+
+.Exchange-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background: rgba(255,255,255, 0.9);
+
+  .is-loading & {
+    display: flex;
+  }
+}
