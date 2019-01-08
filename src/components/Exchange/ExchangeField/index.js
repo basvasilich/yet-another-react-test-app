@@ -45,8 +45,9 @@ classes[displayName] = class extends Component<ExchangeFieldComponentType> {
           <div className={`${displayName}-currency-symbol`}>{currencyCode}</div>
           <div className={`${displayName}-value`}>
             <input
-              className={`${displayName}-input`}
+              className={`${displayName}-input ${displayName}-input-${type}`}
               type="text"
+              name={type}
               tabIndex={isActive ? tabIndex : -1}
               value={value !== '' ? prefix + value : ''}
               onChange={handleChange ? handleChange : _.noop}

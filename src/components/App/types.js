@@ -8,7 +8,7 @@ export type AppStoreType = {
   },
   offline: boolean
 };
-export type ActionType = {type: string, payload: Object};
+export type ActionType = {type: string, payload?: Object};
 export type AppComponentType = {};
 export type DispatchType = (action: ActionType | ThunkActionType | PromiseActionType) => any;
 export type GetStateType = () => AppStoreType;

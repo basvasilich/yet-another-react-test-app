@@ -17,6 +17,7 @@ const displayName = 'Exchange';
 const classes = {};
 
 const mapStateToProps = state => {
+  const offline = _.get(state, 'app.offline');
   const fromState = _.get(state, 'exchange.from');
   const toState = _.get(state, 'exchange.to');
   const ratesLoaded = _.get(state, 'currency.ratesLoaded');
@@ -42,25 +43,24 @@ const mapStateToProps = state => {
     .map(makeItem)
     .valueOf();
 
-  const fromActive = _.find(from, {currencyCode: fromActiveCode});
   const fromActiveIndex = _.findIndex(from, {currencyCode: fromActiveCode});
-  const toActive = _.find(to, {currencyCode: toActiveCode});
   const toActiveIndex = _.findIndex(to, {currencyCode: toActiveCode});
   const balanceTemplate = _.get(state, 'layout.ExchangeField.balanceTemplate');
   const submitButtonLabel = _.get(state, 'layout.Exchange.submitButtonLabel');
   const loadingLabel = _.get(state, 'layout.Exchange.loadingLabel');
+  const ratesUnavailableLabel = _.get(state, 'layout.Exchange.ratesUnavailableLabel');
 
   return {
     from,
-    fromActive,
     fromActiveIndex,
     to,
-    toActive,
     toActiveIndex,
     balanceTemplate,
     submitButtonLabel,
     ratesLoaded,
-    loadingLabel
+    loadingLabel,
+    ratesUnavailableLabel,
+    offline
   };
 };
 
@@ -79,11 +79,18 @@ classes[displayName] = class extends Component<ExchangeComponentType> {
   static displayName = displayName;
 
   handleFieldChange = (source: string, event: SyntheticInputEvent<HTMLInputElement>): void => {
-    const {fromActive, toActive, exchangeFieldUpdate} = this.props;
+    const {from, to, fromActiveIndex, toActiveIndex, exchangeFieldUpdate} = this.props;
+    const fromActive = from[fromActiveIndex];
+    const toActive = to[toActiveIndex];
     let value = _.replace(event.target.value, /[^0-9.]/g, '');
     value = _.replace(value, /\.(\d*)\./g, '.$1');
     value = _.replace(value, /^0\d/g, '0');
     const valueSplit = _.split(value, '.');
+
+    if (value === '.') {
+      value = '';
+    }
+
     if (_.get(valueSplit, '[1].length') > 4) {
       value = _.join([valueSplit[0], valueSplit[1].substr(0, 4)], '.');
     }
@@ -109,7 +116,9 @@ classes[displayName] = class extends Component<ExchangeComponentType> {
 
   handleSubmit = (event: SyntheticEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const {fromActive, toActive, exchangeTransactionMake} = this.props;
+    const {from, to, fromActiveIndex, toActiveIndex, exchangeTransactionMake} = this.props;
+    const fromActive = from[fromActiveIndex];
+    const toActive = to[toActiveIndex];
     const value = _.get(fromActive, 'value');
 
     exchangeTransactionMake({
@@ -123,17 +132,19 @@ classes[displayName] = class extends Component<ExchangeComponentType> {
     const {
       from,
       to,
-      fromActive,
-      toActive,
       balanceTemplate,
       toActiveIndex,
       fromActiveIndex,
       submitButtonLabel,
       ratesLoaded,
-      loadingLabel
+      loadingLabel,
+      ratesUnavailableLabel,
+      offline
     } = this.props;
 
-    const isLoading = ratesLoaded === 0;
+    const isUnavailable = ratesLoaded === 0 || offline;
+    const fromActive = from[fromActiveIndex];
+    const toActive = to[toActiveIndex];
 
     const isButtonDisabled =
       fromActive.value === '' ||
@@ -142,7 +153,7 @@ classes[displayName] = class extends Component<ExchangeComponentType> {
       _.get(fromActive, 'currencyCode') === _.get(toActive, 'currencyCode');
 
     return (
-      <form onSubmit={this.handleSubmit} className={`${displayName} ${isLoading ? 'is-loading' : ''}`}>
+      <form onSubmit={this.handleSubmit} className={`${displayName} ${isUnavailable ? 'is-unavailable' : ''}`}>
         <div className={`${displayName}-header`}>
           <ExchangeRate
             {...{round: 4, fromCode: _.get(fromActive, 'currencyCode'), toCode: _.get(toActive, 'currencyCode')}}
@@ -207,8 +218,8 @@ classes[displayName] = class extends Component<ExchangeComponentType> {
             </button>
           </div>
         </div>
-        <div className={`${displayName}-loading`}>
-          <div className={`${displayName}-loading-i`}>{loadingLabel}</div>
+        <div className={`${displayName}-rates-note`}>
+          <div className={`${displayName}-rates-note-i`}>{offline ? ratesUnavailableLabel : loadingLabel}</div>
         </div>
       </form>
     );

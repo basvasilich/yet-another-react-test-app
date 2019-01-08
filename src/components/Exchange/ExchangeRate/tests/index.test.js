@@ -2,7 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {component as ExchangeRate} from '..';
 
-test('ExchangeRate renders without crashing', () => {
+const makeWrapper = hidden =>
   shallow(
     <ExchangeRate
       {...{
@@ -10,25 +10,17 @@ test('ExchangeRate renders without crashing', () => {
         fromValue: 1,
         toSymbol: 'EUR',
         toValue: 2,
-        hidden: false,
+        hidden,
         round: 2
       }}
     />
   );
+
+test('ExchangeRate renders without crashing', () => {
+  makeWrapper(false);
 });
 
 test('ExchangeRate hidden', () => {
-  const wrapper = shallow(
-    <ExchangeRate
-      {...{
-        fromSymbol: 'USD',
-        fromValue: 1,
-        toSymbol: 'EUR',
-        toValue: 2,
-        hidden: true,
-        round: 2
-      }}
-    />
-  );
+  const wrapper = makeWrapper(true);
   expect(wrapper.html()).toBe(null);
 });

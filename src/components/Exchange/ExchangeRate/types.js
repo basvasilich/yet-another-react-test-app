@@ -7,5 +7,5 @@ export type ExchangeRateComponentType = {
   toSymbol: number,
   toValue: number,
   hidden: boolean,
-  round: number
+  round: number // how many digits after .
 };

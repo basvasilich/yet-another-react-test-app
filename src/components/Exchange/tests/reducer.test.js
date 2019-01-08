@@ -49,6 +49,40 @@ describe('Exchange reducer', () => {
     expect(_.get(newState, ['to', 'items', 'EUR'])).toBe('1');
   });
 
+  test('EXCHANGE_FIELD_UPDATE from', () => {
+    const newState = reducer(undefined, {
+      type: EXCHANGE_FIELD_UPDATE,
+      payload: {
+        fromCode: 'EUR',
+        toCode: 'GBP',
+        value: '1ab',
+        source: 'from',
+        currency: {
+          base: 'EUR',
+          items: {
+            USD: {
+              code: 'USD',
+              rate: 2
+            },
+            EUR: {
+              code: 'EUR',
+              rate: 1
+            },
+            GBP: {
+              code: 'GBP',
+              rate: 4
+            }
+          }
+        }
+      }
+    });
+
+    expect(_.get(newState, ['from', 'items', 'EUR'])).toBe('');
+    expect(_.get(newState, ['to', 'items', 'GBP'])).toBe('');
+    expect(_.get(newState, ['to', 'items', 'USD'])).toBe('');
+    expect(_.get(newState, ['to', 'items', 'EUR'])).toBe('');
+  });
+
   test('EXCHANGE_FIELD_UPDATE to', () => {
     const newState = reducer(undefined, {
       type: EXCHANGE_FIELD_UPDATE,

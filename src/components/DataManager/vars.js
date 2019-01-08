@@ -1,3 +1,4 @@
 // @flow
 
 export const DATA_CURRENCY_UPDATE_RATES = 'DATA_CURRENCY_UPDATE_RATES';
+export const APP_OFFLINE_SET = 'APP_OFFLINE_SET';

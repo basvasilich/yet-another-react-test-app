@@ -47,15 +47,14 @@ export default function(exchange: ExchangeStoreType = initialState, action: Acti
 
       const newTargetItems = _.mapValues(exchange[targetKey].items, (item, key) => {
         const rate = getRateForCodes(sourceCode, key, currency);
-        const result = _.chain(value * rate)
-          .round(4)
-          .toString()
-          .valueOf();
+        const result = _.round(value * rate, 4);
 
-        return result !== '0' ? result : '';
+        return result !== 0 && !_.isNaN(result) ? _.toString(result) : '';
       });
 
-      const newSourceItems = _.mapValues(exchange[sourceKey].items, (item, key) => (key === sourceCode ? value : ''));
+      const newSourceItems = _.mapValues(exchange[sourceKey].items, (item, key) =>
+        key === sourceCode && !_.isNaN(_.toNumber(value)) ? value : ''
+      );
 
       return _.assign({}, exchange, {
         [sourceKey]: _.assign({}, sourceItems, {

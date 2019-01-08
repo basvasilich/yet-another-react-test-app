@@ -1,10 +1,10 @@
 // @flow
 
 export type ExchangeInnerItemType = {
-  currencySymbol: string,
-  currencyCode: string,
-  balance: number,
-  value: string
+  currencySymbol: string, // symbol of field currency
+  currencyCode: string, // code of field currency
+  balance: number, // balance of field currency
+  value: string  // value of field
 };
 
 export type ExchangeItemType = {
@@ -27,8 +27,6 @@ export type exchangeActiveUpdatePayloadType = {
 export type exchangeTransactionMakePayloadType = {fromCode: string, toCode: string, value: string};
 
 export type ExchangeComponentType = {
-  fromActive: ExchangeInnerItemType,
-  toActive: ExchangeInnerItemType,
   exchangeFieldUpdate: (payload: exchangeFieldUpdatePayloadType) => void,
   exchangeActiveUpdate: (payload: exchangeActiveUpdatePayloadType) => void,
   exchangeTransactionMake: (payload: exchangeTransactionMakePayloadType) => void,
@@ -39,7 +37,9 @@ export type ExchangeComponentType = {
   fromActiveIndex: number,
   submitButtonLabel: string,
   loadingLabel: string,
-  ratesLoaded: number
+  ratesLoaded: number,
+  ratesUnavailableLabel: string,
+  offline: boolean
 };
 
 export type ExchangeStoreType = {

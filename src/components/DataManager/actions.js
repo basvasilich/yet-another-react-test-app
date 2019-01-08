@@ -1,6 +1,6 @@
 // @flow
 
-import {DATA_CURRENCY_UPDATE_RATES} from './vars';
+import {DATA_CURRENCY_UPDATE_RATES, APP_OFFLINE_SET} from './vars';
 import {CONFIG_FIXER_API_URL} from '../../config';
 
 import type {DispatchType, ThunkActionType} from '../App/types';
@@ -16,6 +16,12 @@ export const dataCurrencyUpdateRatesAC = (): ThunkActionType => {
         dispatch({
           type: DATA_CURRENCY_UPDATE_RATES,
           payload: resp.rates
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: APP_OFFLINE_SET,
+          payload: true
         });
       });
   };
